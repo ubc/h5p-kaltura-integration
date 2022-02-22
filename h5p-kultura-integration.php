@@ -11,7 +11,7 @@
  * Plugin Name: UBC H5P Addon - Kaltura Integration
  * Plugin URI:  https://ubc.ca/
  * Description: Provides UI for users to pull video from UBC Kalture and embed into h5p contents.
- * Version:     1.0.0
+ * Version:     1.0.1
  * Author:      Kelvin Xu
  * Text Domain: ubc-h5p-addon-kaltura-integration
  * License:     GPL v2 or later
