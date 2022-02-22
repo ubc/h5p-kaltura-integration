@@ -87,7 +87,7 @@ export default () => {
     const setActionsEnabled = () => {
         const insertButton = document.querySelector('.h5p-editor-iframe').contentDocument.querySelector('.h5p-add-dialog .h5p-insert');
         const cancelButton = document.querySelector('.h5p-editor-iframe').contentDocument.querySelector('.h5p-add-dialog .h5p-cancel');
-        
+
         setIsInputdisabled(false);
         insertButton.disabled = false;
         cancelButton.disabled = false;
@@ -104,9 +104,6 @@ export default () => {
                     value={kalturaID}
                     onChange={e => {
                         setKalturaID( e.target.value );
-                    }}
-                    onBlur={e => {
-                        generateKalturaVideoURL();
                     }}
                     disabled={ isInputDisabled }
                 ></input>
@@ -127,23 +124,43 @@ export default () => {
                 { '' !== message ? <div className={`${ isValid ? 'valid' : 'invalid' } h5p-notice`}> 
                     <p><strong>{ message }</strong></p>
                 </div> : null }
+
+                { isInputDisabled ? <div className="loadingio-spinner-eclipse-1tbcqwrifq2">
+                    <div className="ldio-zlghrr0663d">
+                        <div></div>
+                    </div>
+                </div> : null }
+
+                { ! isInputDisabled ? <button
+                    className='h5peditor-button h5peditor-button-textual importance-high'
+                    style={{
+                        marginTop: '1.5rem'
+                    }}
+                    onClick={() => {
+                        generateKalturaVideoURL();
+                    }}
+                >Generate</button> : null }
             </>
         );
     }
 
     return (
-        <div className='field kultura-integration'>
-            <a
-                onClick={() => {
-                    setIsVisible(!isVisible);
-                }}
-                style={{
-                    color: '#2579C6',
-                    fontSize: '15px',
-                    cursor: 'pointer'
-                }}
-            >Generate UBC Kaltura video URL</a>
-            { isVisible ? renderKalturaFields() : null }
-        </div>
+        <>
+            <div className='h5p-divider'></div>
+            <div className='field kultura-integration'>
+                <a
+                    onClick={() => {
+                        setIsVisible(!isVisible);
+                    }}
+                    style={{
+                        color: '#2579C6',
+                        fontSize: '15px',
+                        cursor: 'pointer'
+                    }}
+                >Toggle to generate UBC Kaltura video URL</a>
+                <div className='h5peditor-field-description'>See how to <a href="">find the ID for you videos</a> you have uploaded to Kaltura</div>
+                { isVisible ? renderKalturaFields() : null }
+            </div>
+        </>
     );
 };

@@ -116,57 +116,21 @@ window.H5PEditorOnIframeLoaded(() => {
   document.querySelector('.h5p-editor-iframe').contentDocument.querySelector('.h5p-add-dialog-table > *:first-child').remove();
   document.querySelector('.h5p-editor-iframe').contentDocument.querySelector('.h5p-add-dialog-table > *:first-child').remove(); // Add new div
 
-  document.querySelector('.h5p-editor-iframe').contentDocument.querySelector('.h5p-add-dialog-table .h5p-dialog-box').insertAdjacentHTML('beforeend', '<div id=\"h5p-kultura-integration\"></div>'); // Add styling
+  document.querySelector('.h5p-editor-iframe').contentDocument.querySelector('.h5p-add-dialog-table .h5p-dialog-box').insertAdjacentHTML('beforeend', '<div id=\"h5p-kultura-integration\"></div>'); // Append CSS file
 
-  document.querySelector('.h5p-editor-iframe').contentDocument.querySelector('head').insertAdjacentHTML('beforeend', `
-			<style>
-				.h5p-add-dialog-table > .h5p-dialog-box{
-					width: 100% !important;
-					box-sizing: border-box;
-					margin: 0 !important;
-					padding: 2rem !important;
-				}
-				.h5p-add-dialog-table > .h5p-dialog-box > *:not(#h5p-kultura-integration){
-					//display: none;
-				}
-				.kultura-integration h3{
-					text-align: left !important;
-				}
+  var head = document.querySelector('.h5p-editor-iframe').contentDocument.getElementsByTagName('HEAD')[0];
+  var link = document.querySelector('.h5p-editor-iframe').contentDocument.createElement('link');
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = `${ubc_h5p_kaltura_integration_admin.plugin_url}/assets/dist/css/h5p-new.css`;
+  head.appendChild(link); // Render application
 
-				.kultura-integration h3:first-child{
-					margin-top: 0 !important;
-				}
-				.kultura-integration select{
-					width: 100%;
-				}
-				.h5p-notice{
-					margin: 15px 0;
-					padding-right: 38px;
-					position: relative;
-					background: #fff;
-					border: 1px solid #c3c4c7;
-					border-left-width: 4px;
-					padding: 1px 12px;
-				  }
-				  .h5p-notice.valid{
-					border-left-color: #00a32a;
-				  }
-				  .h5p-notice.invalid{
-					border-left-color: #B32D2E;
-				  }
-				  .h5p-notice p{
-					margin: 0.5em 0 !important;
-					padding: 2px;
-					padding-right: 20px;
-				  }
-			</style>
-		`);
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_assets_src_js_h5p_new__WEBPACK_IMPORTED_MODULE_2__["default"], {
     tags: [],
     __self: undefined,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 73,
+      lineNumber: 34,
       columnNumber: 3
     }
   }), // eslint-disable-next-line no-undef
@@ -294,9 +258,6 @@ const KALTURA_PROTOCOL = 'https';
       onChange: e => {
         setKalturaID(e.target.value);
       },
-      onBlur: e => {
-        generateKalturaVideoURL();
-      },
       disabled: isInputDisabled,
       __self: undefined,
       __source: {
@@ -309,14 +270,14 @@ const KALTURA_PROTOCOL = 'https';
       __self: undefined,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 113,
+        lineNumber: 110,
         columnNumber: 17
       }
     }, "Please make sure the Kaltura video ID you entered is correct and click 'Generate' button"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
       __self: undefined,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 115,
+        lineNumber: 112,
         columnNumber: 17
       }
     }, "Video Format"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
@@ -328,7 +289,7 @@ const KALTURA_PROTOCOL = 'https';
       __self: undefined,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 116,
+        lineNumber: 113,
         columnNumber: 17
       }
     }, Object.keys(VIDEO_FORMAT).map((key, index) => {
@@ -338,7 +299,7 @@ const KALTURA_PROTOCOL = 'https';
         __self: undefined,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 124,
+          lineNumber: 121,
           columnNumber: 32
         }
       }, VIDEO_FORMAT[key]);
@@ -347,33 +308,78 @@ const KALTURA_PROTOCOL = 'https';
       __self: undefined,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 127,
+        lineNumber: 124,
         columnNumber: 36
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
       __self: undefined,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 128,
+        lineNumber: 125,
         columnNumber: 21
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
       __self: undefined,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 128,
+        lineNumber: 125,
         columnNumber: 24
       }
-    }, message))) : null);
+    }, message))) : null, isInputDisabled ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "loadingio-spinner-eclipse-1tbcqwrifq2",
+      __self: undefined,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 128,
+        columnNumber: 37
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "ldio-zlghrr0663d",
+      __self: undefined,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 129,
+        columnNumber: 21
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      __self: undefined,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 130,
+        columnNumber: 25
+      }
+    }))) : null, !isInputDisabled ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      className: "h5peditor-button h5peditor-button-textual importance-high",
+      style: {
+        marginTop: '1.5rem'
+      },
+      onClick: () => {
+        generateKalturaVideoURL();
+      },
+      __self: undefined,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 134,
+        columnNumber: 39
+      }
+    }, "Generate") : null);
   };
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "h5p-divider",
+    __self: undefined,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 149,
+      columnNumber: 13
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "field kultura-integration",
     __self: undefined,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 135,
-      columnNumber: 9
+      lineNumber: 150,
+      columnNumber: 13
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     onClick: () => {
@@ -387,10 +393,26 @@ const KALTURA_PROTOCOL = 'https';
     __self: undefined,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 136,
-      columnNumber: 13
+      lineNumber: 151,
+      columnNumber: 17
     }
-  }, "Generate UBC Kaltura video URL"), isVisible ? renderKalturaFields() : null);
+  }, "Toggle to generate UBC Kaltura video URL"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "h5peditor-field-description",
+    __self: undefined,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 161,
+      columnNumber: 17
+    }
+  }, "See how to ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    href: "",
+    __self: undefined,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 161,
+      columnNumber: 73
+    }
+  }, "find the ID for you videos"), " you have uploaded to Kaltura"), isVisible ? renderKalturaFields() : null));
 });
 
 /***/ }),
