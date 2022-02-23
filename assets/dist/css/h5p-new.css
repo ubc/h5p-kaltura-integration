@@ -4,13 +4,23 @@
   margin: 0 !important;
   padding: 2rem !important; }
 
-.kultura-integration h3 {
-  text-align: left !important; }
-  .kultura-integration h3:first-child {
-    margin-top: 0 !important; }
-
-.kultura-integration select {
-  width: 100%; }
+.kaltura-integration {
+  border: 1px solid #ababab; }
+  .kaltura-integration h3 {
+    text-align: left !important; }
+    .kaltura-integration h3:first-child {
+      margin-top: 0 !important; }
+  .kaltura-integration select {
+    width: 100%; }
+  .kaltura-integration .kaltura-integration-accordion {
+    display: grid;
+    grid-template-columns: 1fr 15px;
+    grid-gap: 20px;
+    align-items: center;
+    cursor: pointer;
+    padding: 20px; }
+  .kaltura-integration .h5peditor-field-description {
+    margin-bottom: 0; }
 
 .h5p-notice {
   margin: 15px 0;

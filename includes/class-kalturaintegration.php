@@ -45,8 +45,9 @@ class KalturaIntegration {
 			'ubc-h5p-kaltura-integration-js',
 			'ubc_h5p_kaltura_integration_admin',
 			array(
-				'security_nonce' => wp_create_nonce( 'security' ),
-				'plugin_url'     => H5P_KALTURA_INTEGRATION_PLUGIN_URL,
+				'security_nonce'          => wp_create_nonce( 'security' ),
+				'plugin_url'              => H5P_KALTURA_INTEGRATION_PLUGIN_URL,
+				'kaltura_instruction_url' => defined( 'UBC_H5P_KALTURA_INSTRUCTION_URL' ) ? UBC_H5P_KALTURA_INSTRUCTION_URL : '/getting-started-with-h5p/finding-your-ubc-kaltura-video-id/',
 			)
 		);
 	}//end enqueue_add_new_content_script()

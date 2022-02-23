@@ -13,6 +13,14 @@ const KALTURA_PARTNER_ID      = '113';
 const KALTURA_STRAMING_FORMAT = 'download';
 const KALTURA_PROTOCOL        = 'https'
 
+const downArrowSVG = () => {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+            <path d="M224 416c-8.188 0-16.38-3.125-22.62-9.375l-192-192c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L224 338.8l169.4-169.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-192 192C240.4 412.9 232.2 416 224 416z"/>
+        </svg>
+    );
+}
+
 export default () => {
     const [kalturaID, setKalturaID] = useState('');
     const [kalturaFormat, setKalturaFormat] = useState(7);
@@ -95,7 +103,12 @@ export default () => {
 
     const renderKalturaFields = () => {
         return (
-            <>
+            <div
+                style={{
+                    padding: '0 20px 20px 20px'
+                }}
+                className='field'
+            >
                 <h3>Video ID</h3>
                 <input 
                     type="text" 
@@ -116,6 +129,7 @@ export default () => {
                     }}
                     value={kalturaFormat}
                     disabled={ isInputDisabled }
+                    className='h5peditor-select'
                 >
                     { Object.keys(VIDEO_FORMAT).map( (key, index ) => {
                         return <option key={ `video-format-option-${index}` } value={key}>{ VIDEO_FORMAT[key] }</option>
@@ -140,25 +154,30 @@ export default () => {
                         generateKalturaVideoURL();
                     }}
                 >Generate</button> : null }
-            </>
+            </div>
         );
     }
 
     return (
         <>
             <div className='h5p-divider'></div>
-            <div className='field kultura-integration'>
-                <a
+            <div className='field kaltura-integration'>
+                <div
+                    className='kaltura-integration-accordion'
                     onClick={() => {
                         setIsVisible(!isVisible);
                     }}
-                    style={{
-                        color: '#2579C6',
-                        fontSize: '15px',
-                        cursor: 'pointer'
-                    }}
-                >Toggle to generate UBC Kaltura video URL</a>
-                <div className='h5peditor-field-description'>See how to <a href="">find the ID for you videos</a> you have uploaded to Kaltura</div>
+                >
+                    <div>
+                        <h3
+                            style={{
+                                marginBottom: 0
+                            }}
+                        >Use UBC Kaltura Video</h3>
+                        <div className='h5peditor-field-description'>See how to <a href={`${ ubc_h5p_kaltura_integration_admin.kaltura_instruction_url }`} target="_blank">find the ID for you videos</a> you have uploaded to Kaltura</div>
+                    </div>
+                    { downArrowSVG() }
+                </div>
                 { isVisible ? renderKalturaFields() : null }
             </div>
         </>

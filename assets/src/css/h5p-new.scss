@@ -5,7 +5,9 @@
     padding: 2rem !important;
 }
 
-.kultura-integration{
+.kaltura-integration{
+    border: 1px solid #ababab;
+
     h3{
         text-align: left !important;
 
@@ -13,9 +15,19 @@
             margin-top: 0 !important;
         }
     }
-
     select{
         width: 100%;
+    }
+    .kaltura-integration-accordion{
+        display: grid;
+        grid-template-columns: 1fr 15px;
+        grid-gap: 20px;
+        align-items: center;
+        cursor: pointer;
+        padding: 20px;
+    }
+    .h5peditor-field-description{
+        margin-bottom: 0;
     }
 }
 

@@ -174,6 +174,28 @@ const KALTURA_SERVICE_URL = 'admin.video.ubc.ca';
 const KALTURA_PARTNER_ID = '113';
 const KALTURA_STRAMING_FORMAT = 'download';
 const KALTURA_PROTOCOL = 'https';
+
+const downArrowSVG = () => {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    viewBox: "0 0 448 512",
+    __self: undefined,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 18,
+      columnNumber: 9
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("path", {
+    d: "M224 416c-8.188 0-16.38-3.125-22.62-9.375l-192-192c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L224 338.8l169.4-169.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-192 192C240.4 412.9 232.2 416 224 416z",
+    __self: undefined,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 19,
+      columnNumber: 13
+    }
+  }));
+};
+
 /* harmony default export */ __webpack_exports__["default"] = (() => {
   const [kalturaID, setKalturaID] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])('');
   const [kalturaFormat, setKalturaFormat] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(7);
@@ -243,11 +265,22 @@ const KALTURA_PROTOCOL = 'https';
   };
 
   const renderKalturaFields = () => {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      style: {
+        padding: '0 20px 20px 20px'
+      },
+      className: "field",
       __self: undefined,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 99,
+        lineNumber: 106,
+        columnNumber: 13
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+      __self: undefined,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 112,
         columnNumber: 17
       }
     }, "Video ID"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -262,7 +295,7 @@ const KALTURA_PROTOCOL = 'https';
       __self: undefined,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 100,
+        lineNumber: 113,
         columnNumber: 17
       }
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
@@ -270,14 +303,14 @@ const KALTURA_PROTOCOL = 'https';
       __self: undefined,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 110,
+        lineNumber: 123,
         columnNumber: 17
       }
     }, "Please make sure the Kaltura video ID you entered is correct and click 'Generate' button"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
       __self: undefined,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 112,
+        lineNumber: 125,
         columnNumber: 17
       }
     }, "Video Format"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
@@ -286,10 +319,11 @@ const KALTURA_PROTOCOL = 'https';
       },
       value: kalturaFormat,
       disabled: isInputDisabled,
+      className: "h5peditor-select",
       __self: undefined,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 113,
+        lineNumber: 126,
         columnNumber: 17
       }
     }, Object.keys(VIDEO_FORMAT).map((key, index) => {
@@ -299,7 +333,7 @@ const KALTURA_PROTOCOL = 'https';
         __self: undefined,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 121,
+          lineNumber: 135,
           columnNumber: 32
         }
       }, VIDEO_FORMAT[key]);
@@ -308,21 +342,21 @@ const KALTURA_PROTOCOL = 'https';
       __self: undefined,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 124,
+        lineNumber: 138,
         columnNumber: 36
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
       __self: undefined,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 125,
+        lineNumber: 139,
         columnNumber: 21
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
       __self: undefined,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 125,
+        lineNumber: 139,
         columnNumber: 24
       }
     }, message))) : null, isInputDisabled ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -330,7 +364,7 @@ const KALTURA_PROTOCOL = 'https';
       __self: undefined,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 128,
+        lineNumber: 142,
         columnNumber: 37
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -338,14 +372,14 @@ const KALTURA_PROTOCOL = 'https';
       __self: undefined,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 129,
+        lineNumber: 143,
         columnNumber: 21
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       __self: undefined,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 130,
+        lineNumber: 144,
         columnNumber: 25
       }
     }))) : null, !isInputDisabled ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -359,7 +393,7 @@ const KALTURA_PROTOCOL = 'https';
       __self: undefined,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 134,
+        lineNumber: 148,
         columnNumber: 39
       }
     }, "Generate") : null);
@@ -370,49 +404,63 @@ const KALTURA_PROTOCOL = 'https';
     __self: undefined,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 149,
+      lineNumber: 163,
       columnNumber: 13
     }
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "field kultura-integration",
+    className: "field kaltura-integration",
     __self: undefined,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 150,
+      lineNumber: 164,
       columnNumber: 13
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "kaltura-integration-accordion",
     onClick: () => {
       setIsVisible(!isVisible);
     },
+    __self: undefined,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 165,
+      columnNumber: 17
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    __self: undefined,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 171,
+      columnNumber: 21
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
     style: {
-      color: '#2579C6',
-      fontSize: '15px',
-      cursor: 'pointer'
+      marginBottom: 0
     },
     __self: undefined,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 151,
-      columnNumber: 17
+      lineNumber: 172,
+      columnNumber: 25
     }
-  }, "Toggle to generate UBC Kaltura video URL"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, "Use UBC Kaltura Video"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "h5peditor-field-description",
     __self: undefined,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 161,
-      columnNumber: 17
+      lineNumber: 177,
+      columnNumber: 25
     }
   }, "See how to ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-    href: "",
+    href: `${ubc_h5p_kaltura_integration_admin.kaltura_instruction_url}`,
+    target: "_blank",
     __self: undefined,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 161,
-      columnNumber: 73
+      lineNumber: 177,
+      columnNumber: 81
     }
-  }, "find the ID for you videos"), " you have uploaded to Kaltura"), isVisible ? renderKalturaFields() : null));
+  }, "find the ID for you videos"), " you have uploaded to Kaltura")), downArrowSVG()), isVisible ? renderKalturaFields() : null));
 });
 
 /***/ }),
