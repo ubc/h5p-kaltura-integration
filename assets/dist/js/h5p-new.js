@@ -122,7 +122,7 @@ window.H5PEditorOnIframeLoaded(() => {
   var link = document.querySelector('.h5p-editor-iframe').contentDocument.createElement('link');
   link.rel = 'stylesheet';
   link.type = 'text/css';
-  link.href = `${ubc_h5p_kaltura_integration_admin.plugin_url}/assets/dist/css/h5p-new.css`;
+  link.href = `${ubc_h5p_kaltura_integration_admin.plugin_url}assets/dist/css/h5p-new.css?ver=${ubc_h5p_kaltura_integration_admin.iframe_css_file_version}`;
   head.appendChild(link); // Render application
 
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_assets_src_js_h5p_new__WEBPACK_IMPORTED_MODULE_2__["default"], {

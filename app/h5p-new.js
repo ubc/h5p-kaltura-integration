@@ -26,7 +26,7 @@ window.H5PEditorOnIframeLoaded( () => {
 
 	link.rel = 'stylesheet'; 
 	link.type = 'text/css';
-	link.href = `${ubc_h5p_kaltura_integration_admin.plugin_url}/assets/dist/css/h5p-new.css`; 
+	link.href = `${ubc_h5p_kaltura_integration_admin.plugin_url}assets/dist/css/h5p-new.css?ver=${ubc_h5p_kaltura_integration_admin.iframe_css_file_version}`; 
 	head.appendChild(link);
 
 	// Render application
