@@ -21,7 +21,7 @@ const downArrowSVG = () => {
     );
 }
 
-export default () => {
+export default props => {
     const [kalturaID, setKalturaID] = useState('');
     const [kalturaFormat, setKalturaFormat] = useState(7);
     const [isVisible, setIsVisible] = useState(false);
@@ -29,11 +29,11 @@ export default () => {
     const [isValid, setIsValid] = useState(null);
     const [isInputDisabled, setIsInputdisabled] = useState(false);
 
-    const inputElement = document.querySelector('.h5p-editor-iframe').contentDocument.querySelector('.h5p-add-dialog-table .h5p-file-url');
+    const inputElement = props.rootParent.querySelector('.h5p-file-url');
 
     useEffect(() => {
-        const insertButton = document.querySelector('.h5p-editor-iframe').contentDocument.querySelector('.h5p-add-dialog .h5p-insert');
-        const cancelButton = document.querySelector('.h5p-editor-iframe').contentDocument.querySelector('.h5p-add-dialog .h5p-cancel');
+        const insertButton = props.rootParent.querySelector('.h5p-insert');
+        const cancelButton = props.rootParent.querySelector('.h5p-cancel');
 
         insertButton.addEventListener('click', () => {
             resetStates();
@@ -60,7 +60,7 @@ export default () => {
             return;
         }
 
-        const videoUrl = `https://${KALTURA_SERVICE_URL}/p/${KALTURA_PARTNER_ID}/sp/0/playManifest/entryId/${kalturaID}/format/${KALTURA_STRAMING_FORMAT}/protocol/${KALTURA_PROTOCOL}/flavorParamIds/${kalturaFormat}`;
+        const videoUrl = `https://${KALTURA_SERVICE_URL}/p/${KALTURA_PARTNER_ID}/sp/0/playManifest/entryId/${kalturaID}/format/${KALTURA_STRAMING_FORMAT}/protocol/${KALTURA_PROTOCOL}/flavorParamIds/${kalturaFormat}/`;
 
         let formData = new FormData();
 
@@ -84,8 +84,8 @@ export default () => {
     }
 
     const setActionsDisabled = () => {
-        const insertButton = document.querySelector('.h5p-editor-iframe').contentDocument.querySelector('.h5p-add-dialog .h5p-insert');
-        const cancelButton = document.querySelector('.h5p-editor-iframe').contentDocument.querySelector('.h5p-add-dialog .h5p-cancel');
+        const insertButton = props.rootParent.querySelector('.h5p-insert');
+        const cancelButton = props.rootParent.querySelector('.h5p-cancel');
 
         setIsInputdisabled(true);
         insertButton.disabled = true;
@@ -93,8 +93,8 @@ export default () => {
     }
 
     const setActionsEnabled = () => {
-        const insertButton = document.querySelector('.h5p-editor-iframe').contentDocument.querySelector('.h5p-add-dialog .h5p-insert');
-        const cancelButton = document.querySelector('.h5p-editor-iframe').contentDocument.querySelector('.h5p-add-dialog .h5p-cancel');
+        const insertButton = props.rootParent.querySelector('.h5p-insert');
+        const cancelButton = props.rootParent.querySelector('.h5p-cancel');
 
         setIsInputdisabled(false);
         insertButton.disabled = false;

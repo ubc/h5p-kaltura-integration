@@ -21,6 +21,8 @@ class KalturaIntegration {
 	public function __construct() {
 		add_action( 'load-h5p-content_page_h5p_new', array( $this, 'enqueue_add_new_content_script' ), 10 );
 		add_action( 'wp_ajax_ubc_h5p_kaltura_verify_source', array( $this, 'kaltura_verify_source' ) );
+		add_action( 'h5p_additional_embed_head_tags', array( $this, 'kaltura_embed_styles' ) );
+		add_filter( 'print_h5p_content', array( $this, 'kaltura_shortcode_styles' ), 10, 2 );
 	}
 
 	/**
@@ -35,9 +37,9 @@ class KalturaIntegration {
 
 		wp_enqueue_script(
 			'ubc-h5p-kaltura-integration-js',
-			H5P_KALTURA_INTEGRATION_PLUGIN_URL . 'assets/dist/js/h5p-new.js',
+			H5P_KALTURA_INTEGRATION_PLUGIN_URL . 'assets/dist/js/app.js',
 			array(),
-			filemtime( H5P_KALTURA_INTEGRATION_PLUGIN_DIR . 'assets/dist/js/h5p-new.js' ),
+			filemtime( H5P_KALTURA_INTEGRATION_PLUGIN_DIR . 'assets/dist/js/app.js' ),
 			true
 		);
 
@@ -48,7 +50,7 @@ class KalturaIntegration {
 				'security_nonce'          => wp_create_nonce( 'security' ),
 				'plugin_url'              => H5P_KALTURA_INTEGRATION_PLUGIN_URL,
 				'kaltura_instruction_url' => defined( 'UBC_H5P_KALTURA_INSTRUCTION_URL' ) ? UBC_H5P_KALTURA_INSTRUCTION_URL : '/getting-started-with-h5p/finding-your-ubc-kaltura-video-id/',
-				'iframe_css_file_version' => filemtime( H5P_KALTURA_INTEGRATION_PLUGIN_DIR . 'assets/dist/css/h5p-new.css' ),
+				'iframe_css_file_version' => filemtime( H5P_KALTURA_INTEGRATION_PLUGIN_DIR . 'assets/dist/css/app.css' ),
 			)
 		);
 	}//end enqueue_add_new_content_script()
@@ -92,6 +94,37 @@ class KalturaIntegration {
 		);
 
 	}//end kaltura_verify_source()
+
+	/**
+	 * Print style for presentation content type in embed mode.
+	 */
+	public function kaltura_embed_styles() {
+		echo '<style>
+			.h5p-element{
+				min-height: 100px;
+			}
+		</style>';
+	}
+
+	/**
+	 * Embed script for shortcode.
+	 *
+	 * @param string $h5p_content_wrapper The HTML string of the content wrapper.
+	 * @param array  $content Array contains all the content information.
+	 *
+	 * @return string
+	 */
+	public function kaltura_shortcode_styles( $h5p_content_wrapper, $content ) {
+		wp_enqueue_script(
+			'ubc-h5p-kaltura-integration-presentation-js',
+			H5P_KALTURA_INTEGRATION_PLUGIN_URL . 'assets/dist/js/shortcode.js',
+			array(),
+			filemtime( H5P_KALTURA_INTEGRATION_PLUGIN_DIR . 'assets/dist/js/shortcode.js' ),
+			true
+		);
+
+		return $h5p_content_wrapper;
+	}
 }
 
 new KalturaIntegration();

@@ -81,15 +81,15 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./app/h5p-new.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./app/app.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./app/h5p-new.js":
-/*!************************!*\
-  !*** ./app/h5p-new.js ***!
-  \************************/
+/***/ "./app/app.js":
+/*!********************!*\
+  !*** ./app/app.js ***!
+  \********************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -102,40 +102,95 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _assets_src_js_h5p_new__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../assets/src/js/h5p-new */ "./assets/src/js/h5p-new.js");
 /* harmony import */ var _assets_src_css_h5p_new_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../assets/src/css/h5p-new.scss */ "./assets/src/css/h5p-new.scss");
 /* harmony import */ var _assets_src_css_h5p_new_scss__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_assets_src_css_h5p_new_scss__WEBPACK_IMPORTED_MODULE_3__);
-var _jsxFileName = "/Users/kelvin/Local Sites/multisite/app/public/wp-content/plugins/ubc-h5p-addon-kaltura-integration/app/h5p-new.js";
+var _jsxFileName = "/Users/kelvin/Local Sites/multisite/app/public/wp-content/plugins/ubc-h5p-addon-kaltura-integration/app/app.js";
+
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function () {}; return { s: F, n: function () { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function (e) { throw e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function () { it = it.call(o); }, n: function () { var step = it.next(); normalCompletion = step.done; return step; }, e: function (e) { didErr = true; err = e; }, f: function () { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+
 
 
 
 
 window.H5PEditorOnIframeLoaded(() => {
-  if (!document.querySelector('.h5p-editor-iframe').contentDocument.querySelector('.h5p-add-dialog-table')) {
-    return;
-  } // Remove upload videos and vertical line
+  renderKalturaStyles();
+  /*
+  * Interactive video content type.
+  */
+
+  if (document.querySelector('.h5p-editor-iframe').contentDocument.querySelector('.h5peditor').classList.contains('h5p-interactivevideo-editor') || document.querySelector('.h5p-editor-iframe').contentDocument.querySelector('.h5peditor').classList.contains('h5p-audio-editor')) {
+    renderKalturaDom();
+  }
+  /*
+  * More complicated content type that use interactive video as a widget or subtype.
+  */
 
 
-  document.querySelector('.h5p-editor-iframe').contentDocument.querySelector('.h5p-add-dialog-table > *:first-child').remove();
-  document.querySelector('.h5p-editor-iframe').contentDocument.querySelector('.h5p-add-dialog-table > *:first-child').remove(); // Add new div
+  const targetNode = document.querySelector('.h5p-editor-iframe').contentDocument.querySelector('.h5peditor-form');
+  const config = {
+    attributes: false,
+    childList: true,
+    subtree: true
+  }; // Callback function to execute when mutations are observed
 
-  document.querySelector('.h5p-editor-iframe').contentDocument.querySelector('.h5p-add-dialog-table .h5p-dialog-box').insertAdjacentHTML('beforeend', '<div id=\"h5p-kultura-integration\"></div>'); // Append CSS file
+  const callback = function (mutationsList, observer) {
+    // Use traditional 'for loops' for IE 11
+    var _iterator = _createForOfIteratorHelper(mutationsList),
+        _step;
 
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        const mutation = _step.value;
+
+        if (mutation.addedNodes[0] && jQuery(mutation.addedNodes[0]).find('.h5p-add-dialog-table') && jQuery(mutation.addedNodes[0]).find('.h5p-add-dialog-table').children() && jQuery(mutation.addedNodes[0]).find('.h5p-add-dialog-table').children().length === 3) {
+          renderKalturaDom(mutation.addedNodes[0].querySelector('.h5p-add-dialog-table'));
+          break;
+        }
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+  }; // Create an observer instance linked to the callback function
+
+
+  const observer = new MutationObserver(callback); // Start observing the target node for configured mutations
+
+  observer.observe(targetNode, config);
+});
+
+function renderKalturaDom(relativeDom = null) {
+  const dialogTable = relativeDom ? relativeDom : document.querySelector('.h5p-editor-iframe').contentDocument.querySelector('.h5p-add-dialog-table'); // Remove upload videos and vertical line
+
+  dialogTable.removeChild(dialogTable.firstElementChild);
+  dialogTable.removeChild(dialogTable.firstElementChild); // Add new div
+
+  dialogTable.querySelector('.h5p-dialog-box').insertAdjacentHTML('beforeend', '<div class=\"h5p-kultura-integration\"></div>'); // Render application
+
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_assets_src_js_h5p_new__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    rootParent: dialogTable.closest('.h5p-add-dialog'),
+    __self: this,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 61,
+      columnNumber: 3
+    }
+  }), // eslint-disable-next-line no-undef
+  dialogTable.querySelector('.h5p-kultura-integration'));
+}
+
+function renderKalturaStyles() {
+  // Append CSS file
   var head = document.querySelector('.h5p-editor-iframe').contentDocument.getElementsByTagName('HEAD')[0];
   var link = document.querySelector('.h5p-editor-iframe').contentDocument.createElement('link');
   link.rel = 'stylesheet';
   link.type = 'text/css';
-  link.href = `${ubc_h5p_kaltura_integration_admin.plugin_url}assets/dist/css/h5p-new.css?ver=${ubc_h5p_kaltura_integration_admin.iframe_css_file_version}`;
-  head.appendChild(link); // Render application
-
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_assets_src_js_h5p_new__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    tags: [],
-    __self: undefined,
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 34,
-      columnNumber: 3
-    }
-  }), // eslint-disable-next-line no-undef
-  document.querySelector('.h5p-editor-iframe').contentDocument.getElementById('h5p-kultura-integration'));
-});
+  link.href = `${ubc_h5p_kaltura_integration_admin.plugin_url}assets/dist/css/app.css?ver=${ubc_h5p_kaltura_integration_admin.iframe_css_file_version}`;
+  head.appendChild(link);
+}
 
 /***/ }),
 
@@ -196,17 +251,17 @@ const downArrowSVG = () => {
   }));
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (() => {
+/* harmony default export */ __webpack_exports__["default"] = (props => {
   const [kalturaID, setKalturaID] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])('');
   const [kalturaFormat, setKalturaFormat] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(7);
   const [isVisible, setIsVisible] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false);
   const [message, setMessage] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])('');
   const [isValid, setIsValid] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null);
   const [isInputDisabled, setIsInputdisabled] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false);
-  const inputElement = document.querySelector('.h5p-editor-iframe').contentDocument.querySelector('.h5p-add-dialog-table .h5p-file-url');
+  const inputElement = props.rootParent.querySelector('.h5p-file-url');
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
-    const insertButton = document.querySelector('.h5p-editor-iframe').contentDocument.querySelector('.h5p-add-dialog .h5p-insert');
-    const cancelButton = document.querySelector('.h5p-editor-iframe').contentDocument.querySelector('.h5p-add-dialog .h5p-cancel');
+    const insertButton = props.rootParent.querySelector('.h5p-insert');
+    const cancelButton = props.rootParent.querySelector('.h5p-cancel');
     insertButton.addEventListener('click', () => {
       resetStates();
     });
@@ -231,7 +286,7 @@ const downArrowSVG = () => {
       return;
     }
 
-    const videoUrl = `https://${KALTURA_SERVICE_URL}/p/${KALTURA_PARTNER_ID}/sp/0/playManifest/entryId/${kalturaID}/format/${KALTURA_STRAMING_FORMAT}/protocol/${KALTURA_PROTOCOL}/flavorParamIds/${kalturaFormat}`;
+    const videoUrl = `https://${KALTURA_SERVICE_URL}/p/${KALTURA_PARTNER_ID}/sp/0/playManifest/entryId/${kalturaID}/format/${KALTURA_STRAMING_FORMAT}/protocol/${KALTURA_PROTOCOL}/flavorParamIds/${kalturaFormat}/`;
     let formData = new FormData();
     formData.append('action', 'ubc_h5p_kaltura_verify_source');
     formData.append('nonce', ubc_h5p_kaltura_integration_admin.security_nonce);
@@ -249,16 +304,16 @@ const downArrowSVG = () => {
   };
 
   const setActionsDisabled = () => {
-    const insertButton = document.querySelector('.h5p-editor-iframe').contentDocument.querySelector('.h5p-add-dialog .h5p-insert');
-    const cancelButton = document.querySelector('.h5p-editor-iframe').contentDocument.querySelector('.h5p-add-dialog .h5p-cancel');
+    const insertButton = props.rootParent.querySelector('.h5p-insert');
+    const cancelButton = props.rootParent.querySelector('.h5p-cancel');
     setIsInputdisabled(true);
     insertButton.disabled = true;
     cancelButton.disabled = true;
   };
 
   const setActionsEnabled = () => {
-    const insertButton = document.querySelector('.h5p-editor-iframe').contentDocument.querySelector('.h5p-add-dialog .h5p-insert');
-    const cancelButton = document.querySelector('.h5p-editor-iframe').contentDocument.querySelector('.h5p-add-dialog .h5p-cancel');
+    const insertButton = props.rootParent.querySelector('.h5p-insert');
+    const cancelButton = props.rootParent.querySelector('.h5p-cancel');
     setIsInputdisabled(false);
     insertButton.disabled = false;
     cancelButton.disabled = false;
@@ -28994,4 +29049,4 @@ if (false) {} else {
 /***/ })
 
 /******/ });
-//# sourceMappingURL=h5p-new.js.map
+//# sourceMappingURL=app.js.map
