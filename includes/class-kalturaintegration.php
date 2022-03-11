@@ -21,8 +21,8 @@ class KalturaIntegration {
 	public function __construct() {
 		add_action( 'load-h5p-content_page_h5p_new', array( $this, 'enqueue_add_new_content_script' ), 10 );
 		add_action( 'wp_ajax_ubc_h5p_kaltura_verify_source', array( $this, 'kaltura_verify_source' ) );
-		add_action( 'h5p_additional_embed_head_tags', array( $this, 'kaltura_embed_styles' ) );
-		add_filter( 'print_h5p_content', array( $this, 'kaltura_shortcode_styles' ), 10, 2 );
+		//add_action( 'h5p_additional_embed_head_tags', array( $this, 'kaltura_embed_styles' ) );
+		//add_filter( 'print_h5p_content', array( $this, 'kaltura_shortcode_styles' ), 10, 2 );
 	}
 
 	/**
