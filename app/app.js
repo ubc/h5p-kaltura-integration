@@ -7,15 +7,15 @@ window.H5PEditorOnIframeLoaded( () => {
 	renderKalturaStyles();
 
 	/*
-	* Interactive video content type.
+	* Render Kaltura video dom to replace existing video/audio upload sectin on page load.
 	*/
-	if( document.querySelector('.h5p-editor-iframe').contentDocument.querySelector('.h5peditor').classList.contains('h5p-interactivevideo-editor') ||
-	document.querySelector('.h5p-editor-iframe').contentDocument.querySelector('.h5peditor').classList.contains('h5p-audio-editor') ) {
-		renderKalturaDom();
-	}
-
+	const fieldsOnLoad = document.querySelector('.h5p-editor-iframe').contentDocument.querySelectorAll('.h5p-add-dialog-table');
+	fieldsOnLoad.forEach(field => {
+		renderKalturaDom(field);
+	});
+	
 	/*
-	* More complicated content type that use interactive video as a widget or subtype.
+	* More complicated content type that use video/audio as a widget or subtype.
 	*/
 
 	const targetNode = document.querySelector('.h5p-editor-iframe').contentDocument.querySelector('.h5peditor-form');

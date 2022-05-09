@@ -15,3 +15,8 @@ Build JS and CSS for production
 
 Install phpcs with WordPress coding standard
 `composer install`
+
+## Change Log
+
+### 1.0.6
+- Improve the way to determine if there's a video upload field need to be replace on page load. This should make the script serve a more general case and work for all content types theoratically.
