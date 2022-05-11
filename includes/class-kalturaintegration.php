@@ -64,34 +64,23 @@ class KalturaIntegration {
 		check_ajax_referer( 'security', 'nonce' );
 
 		$video_url = isset( $_POST['video_url'] ) ? esc_url_raw( wp_unslash( $_POST['video_url'] ) ) : null;
-		$response  = wp_remote_get( $video_url );
-		$header    = wp_remote_retrieve_header( $response, 'content-type' );
+		$response  = wp_remote_head( $video_url );
 
-		if ( isset( $response['response'] ) && isset( $response['response']['code'] ) && 200 !== $response['response']['code'] ) {
+		if ( isset( $response['response'] ) && isset( $response['response']['code'] ) && ( 200 === $response['response']['code'] || 302 === $response['response']['code'] ) ) {
+			wp_send_json(
+				array(
+					'valid'   => true,
+					'message' => __( "Media ID Valid. The source URL has been generated above. Press 'Insert' to use this Kaltura media.", 'ubc-h5p-addon-kaltura-integration' ),
+				)
+			);
+		} else {
 			wp_send_json(
 				array(
 					'valid'   => false,
-					'message' => __( 'Error. Video ID Invalid. Please see how to find the ID for your videos uploaded to Kaltura.', 'ubc-h5p-addon-kaltura-integration' ),
+					'message' => __( 'Error. Media ID Invalid. Please see how to find the ID for your media uploaded to Kaltura.', 'ubc-h5p-addon-kaltura-integration' ),
 				)
 			);
 		}
-
-		$header = wp_remote_retrieve_header( $response, 'content-type' );
-		if ( 'video/mp4' !== $header ) {
-			wp_send_json(
-				array(
-					'valid'   => false,
-					'message' => __( 'Error. The video is not in .mp4 format.', 'ubc-h5p-addon-kaltura-integration' ),
-				)
-			);
-		}
-
-		wp_send_json(
-			array(
-				'valid'   => true,
-				'message' => __( "Video ID Valid. The source URL has been generated above. Press 'Insert' to use this Kaltura video.", 'ubc-h5p-addon-kaltura-integration' ),
-			)
-		);
 
 	}//end kaltura_verify_source()
 
