@@ -8,8 +8,8 @@ const VIDEO_FORMAT = {
     7: 'HD/1080'
 }
 
-const KALTURA_SERVICE_URL     = 'admin.video.ubc.ca';
-const KALTURA_PARTNER_ID      = '113';
+const KALTURA_SERVICE_URL     = 'vodcdn.ca.kaltura.com';
+const KALTURA_PARTNER_ID      = '161';
 const KALTURA_STRAMING_FORMAT = 'download';
 const KALTURA_PROTOCOL        = 'https'
 
@@ -60,7 +60,7 @@ export default props => {
             return;
         }
 
-        const videoUrl = `https://${KALTURA_SERVICE_URL}/p/${KALTURA_PARTNER_ID}/sp/0/playManifest/entryId/${kalturaID}/format/${KALTURA_STRAMING_FORMAT}/protocol/${KALTURA_PROTOCOL}/flavorParamIds/${kalturaFormat}/`;
+        const videoUrl = `https://${KALTURA_SERVICE_URL}/p/${KALTURA_PARTNER_ID}/sp/${KALTURA_PARTNER_ID}00/playManifest/entryId/${kalturaID}/format/${KALTURA_STRAMING_FORMAT}/protocol/${KALTURA_PROTOCOL}/flavorParamIds/${kalturaFormat}/`;
 
         let formData = new FormData();
 
