@@ -46,15 +46,32 @@ window.H5PEditorOnIframeLoaded( () => {
 
 function renderKalturaDom( relativeDom = null ) {
 	const dialogTable = relativeDom ? relativeDom : document.querySelector('.h5p-editor-iframe').contentDocument.querySelector('.h5p-add-dialog-table');
+	let container = null;
 
-	// Remove upload videos and vertical line
-	dialogTable.removeChild(dialogTable.firstElementChild);
-	dialogTable.removeChild(dialogTable.firstElementChild);
+	// Check to see if it is tab style
+	if ( dialogTable.firstElementChild.classList.contains('av-tablist') ) {
+		// If it is tabs, this happens for Virtual Tour.
+		dialogTable.querySelector('#av-tab-2').click();
+
+		// Remove first tab and last tab
+		dialogTable.firstElementChild.firstElementChild.remove();
+		dialogTable.firstElementChild.lastElementChild.remove();
+
+		// Remove first tab content and last tab content
+		dialogTable.querySelector('#av-tabpanel-0').remove();
+		dialogTable.querySelector('#av-tabpanel-3').remove();
+
+		container = dialogTable.querySelector('#av-tabpanel-2');
+	} else {
+		// Remove upload videos and vertical line
+		dialogTable.removeChild(dialogTable.firstElementChild);
+		dialogTable.removeChild(dialogTable.firstElementChild);
+
+		container = dialogTable.querySelector('.h5p-dialog-box');
+	}
 
 	// Add new div
-	dialogTable
-	.querySelector('.h5p-dialog-box')
-	.insertAdjacentHTML('beforeend', '<div class=\"h5p-kultura-integration\"></div>');
+	container.insertAdjacentHTML('beforeend', '<div class=\"h5p-kultura-integration\"></div>');
 
 	// Render application
 	ReactDOM.render(

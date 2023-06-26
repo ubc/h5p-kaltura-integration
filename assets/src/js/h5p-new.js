@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 const VIDEO_FORMAT = {
-    0: 'Raw Video',
+    0: 'Raw File',
     2: 'Basic/Small',
     4: 'SD/Small',
     5: 'SD/Large',
@@ -109,10 +109,10 @@ export default props => {
                 }}
                 className='field'
             >
-                <h3>Video ID</h3>
+                <h3>Media ID</h3>
                 <input 
                     type="text" 
-                    placeholder='Enter UBC kaltura video ID. Eg, 0_mxcjbk76' 
+                    placeholder='Enter UBC kaltura media ID. Eg, 0_mxcjbk76' 
                     className="h5peditor-text" 
                     value={kalturaID}
                     onChange={e => {
@@ -120,9 +120,9 @@ export default props => {
                     }}
                     disabled={ isInputDisabled }
                 ></input>
-                <p className='h5peditor-field-description'>Please make sure the Kaltura video ID you entered is correct and click 'Generate' button</p>
-
-                <h3>Video Format</h3>
+                <p className='h5peditor-field-description'>Please make sure the Kaltura media ID you entered is correct and click 'Generate' button</p>
+                <br />
+                <h3>Media Format</h3>
                 <select
                     onChange={e => {
                         setKalturaFormat( e.target.value );
@@ -173,8 +173,8 @@ export default props => {
                             style={{
                                 marginBottom: 0
                             }}
-                        >Use UBC Kaltura Video</h3>
-                        <div className='h5peditor-field-description'>See how to <a href={`${ ubc_h5p_kaltura_integration_admin.kaltura_instruction_url }`} target="_blank">find the ID for you videos</a> you have uploaded to Kaltura</div>
+                        >Use UBC Kaltura Video/Audio</h3>
+                        <div className='h5peditor-field-description'>See how to <a href={`${ ubc_h5p_kaltura_integration_admin.kaltura_instruction_url }`} target="_blank">find the ID for you videos/audios</a> you have uploaded to Kaltura. <strong style={{color: 'black', textDecoration: 'underline'}}>For audio files, please select 'Raw File' for the Media Format.</strong></div>
                     </div>
                     { downArrowSVG() }
                 </div>
