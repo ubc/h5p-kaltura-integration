@@ -1,17 +1,26 @@
 import React, { useEffect, useState } from 'react';
 
+const MEDIA_TYPE = [
+    'Video',
+    'Audio'
+];
+
+const AUDIO_FORMAT = {
+    0: 'Raw File'
+};
+
 const VIDEO_FORMAT = {
     0: 'Raw File',
     2: 'Basic/Small',
     4: 'SD/Small',
     5: 'SD/Large',
     7: 'HD/1080'
-}
+};
 
 const KALTURA_SERVICE_URL     = 'vodcdn.ca.kaltura.com';
 const KALTURA_PARTNER_ID      = '161';
 const KALTURA_STRAMING_FORMAT = 'download';
-const KALTURA_PROTOCOL        = 'https'
+const KALTURA_PROTOCOL        = 'https';
 
 const downArrowSVG = () => {
     return (
@@ -23,6 +32,7 @@ const downArrowSVG = () => {
 
 export default props => {
     const [kalturaID, setKalturaID] = useState('');
+    const [kalturaMediaType, setKalturaMediaType] = useState('Video');
     const [kalturaFormat, setKalturaFormat] = useState(7);
     const [isVisible, setIsVisible] = useState(false);
     const [message, setMessage] = useState('');
@@ -44,8 +54,14 @@ export default props => {
         })
     }, [])
 
+    useEffect(() => {
+        console.log(kalturaMediaType);
+        setKalturaFormat( 'Video' === kalturaMediaType ? 7 : 0 );
+    }, [kalturaMediaType]);
+
     const resetStates = () => {
         setKalturaID('');
+        setKalturaMediaType('Video');
         setKalturaFormat(7);
         setIsVisible(false);
         setMessage('');
@@ -53,20 +69,20 @@ export default props => {
         setIsInputdisabled(false);
     }
 
-    const generateKalturaVideoURL = async () => {
+    const generateKalturaMediaURL = async () => {
         if( ! kalturaID ) {
             setIsValid(false);
-            setMessage('Kaltura video ID is required.');
+            setMessage('Kaltura media ID is required.');
             return;
         }
 
-        const videoUrl = `https://${KALTURA_SERVICE_URL}/p/${KALTURA_PARTNER_ID}/sp/${KALTURA_PARTNER_ID}00/playManifest/entryId/${kalturaID}/format/${KALTURA_STRAMING_FORMAT}/protocol/${KALTURA_PROTOCOL}/flavorParamIds/${kalturaFormat}/`;
+        const mediaURL = `https://${KALTURA_SERVICE_URL}/p/${KALTURA_PARTNER_ID}/sp/${KALTURA_PARTNER_ID}00/playManifest/entryId/${kalturaID}/format/${KALTURA_STRAMING_FORMAT}/protocol/${KALTURA_PROTOCOL}/flavorParamIds/${kalturaFormat}/${ 'Video' === kalturaMediaType ? 'video.mp4' : 'audio.mp3' }`;
 
         let formData = new FormData();
 
         formData.append( 'action', 'ubc_h5p_kaltura_verify_source' );
         formData.append( 'nonce', ubc_h5p_kaltura_integration_admin.security_nonce );
-        formData.append( 'video_url', videoUrl );
+        formData.append( 'media_url', mediaURL );
 
         setActionsDisabled();
 
@@ -80,7 +96,7 @@ export default props => {
         setIsValid(response.valid);
         setMessage(response.message);
 
-        inputElement.value = response.valid ? videoUrl : '';
+        inputElement.value = response.valid ? mediaURL : '';
     }
 
     const setActionsDisabled = () => {
@@ -109,6 +125,20 @@ export default props => {
                 }}
                 className='field'
             >
+                <h3>Media Type</h3>
+                <select
+                    onChange={e => {
+                        setKalturaMediaType( e.target.value );
+                    }}
+                    value={kalturaMediaType}
+                    disabled={ isInputDisabled }
+                    className='h5peditor-select'
+                >
+                    { MEDIA_TYPE.map( (type, index ) => {
+                        return <option key={ `media-type-option-${index}` } value={type}>{ type }</option>
+                    } ) }
+                </select>
+                <br />
                 <h3>Media ID</h3>
                 <input 
                     type="text" 
@@ -131,8 +161,8 @@ export default props => {
                     disabled={ isInputDisabled }
                     className='h5peditor-select'
                 >
-                    { Object.keys(VIDEO_FORMAT).map( (key, index ) => {
-                        return <option key={ `video-format-option-${index}` } value={key}>{ VIDEO_FORMAT[key] }</option>
+                    { Object.keys('Video' === kalturaMediaType ? VIDEO_FORMAT : AUDIO_FORMAT).map( (key, index ) => {
+                        return <option key={ `video-format-option-${index}` } value={key}>{ 'Video' === kalturaMediaType ? VIDEO_FORMAT[key] : AUDIO_FORMAT[key] }</option>
                     } ) }
                 </select>
                 { '' !== message ? <div className={`${ isValid ? 'valid' : 'invalid' } h5p-notice`}> 
@@ -151,7 +181,7 @@ export default props => {
                         marginTop: '1.5rem'
                     }}
                     onClick={() => {
-                        generateKalturaVideoURL();
+                        generateKalturaMediaURL();
                     }}
                 >Generate</button> : null }
             </div>

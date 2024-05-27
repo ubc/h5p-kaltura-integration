@@ -18,6 +18,15 @@ Install phpcs with WordPress coding standard
 
 ## Change Log
 
+### 1.0.10
+- Seprate UI between Audio and Video to allow it to work within embeded elements.
+
+### 1.0.9
+- Added support for Audio files. Might not be an optimized solution, but works for now.
+
+### 1.0.8
+- Update Kaltura server connections to the cloud instance.
+
 ### 1.0.7
 - Use wp_remote_head function when validating the media URL to prevent large video times out the HTTP request.
 

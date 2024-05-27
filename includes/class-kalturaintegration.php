@@ -63,8 +63,8 @@ class KalturaIntegration {
 	public function kaltura_verify_source() {
 		check_ajax_referer( 'security', 'nonce' );
 
-		$video_url = isset( $_POST['video_url'] ) ? esc_url_raw( wp_unslash( $_POST['video_url'] ) ) : null;
-		$response  = wp_remote_head( $video_url );
+		$media_url = isset( $_POST['media_url'] ) ? esc_url_raw( wp_unslash( $_POST['media_url'] ) ) : null;
+		$response  = wp_remote_head( $media_url );
 
 		if ( isset( $response['response'] ) && isset( $response['response']['code'] ) && ( 200 === $response['response']['code'] || 302 === $response['response']['code'] ) ) {
 			wp_send_json(

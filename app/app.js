@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from '../assets/src/js/h5p-new';
 import '../assets/src/css/h5p-new.scss';
-console.log('??');
+
 window.H5PEditorOnIframeLoaded( () => {
 	renderKalturaStyles();
 
