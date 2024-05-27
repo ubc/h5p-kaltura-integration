@@ -1,9 +1,6 @@
-const glob = require( 'glob-all' );
-const webpack = require( 'webpack' );
 const path = require( 'path' );
-const UglifyJsPlugin = require( 'uglifyjs-webpack-plugin' );
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
-const OptimizeCSSAssetsPlugin = require( 'optimize-css-assets-webpack-plugin' );
+const CssMinimizerPlugin = require( 'css-minimizer-webpack-plugin' );
 
 module.exports = function( env, argv ) {
   const isDev = 'development' === argv.mode ? true : false;
@@ -23,48 +20,29 @@ module.exports = function( env, argv ) {
     module: {
       rules: [
         {
-          test: /\.scss$/,
+          test: /\.s[ac]ss$/i,
           use: [
-            {
-              loader: MiniCssExtractPlugin.loader
-            },
-            {
-              loader: 'css-loader',
-              options: {
-                sourceMap: isDev
-              }
-            },
-            {
-              loader: 'postcss-loader', // Run post css actions
-              options: {
-                plugins: function() {
-
-                  // post css plugins, can be exported to postcss.config.js
-                  return [
-                    require( 'precss' ),
-                    require( 'autoprefixer' )
-                  ];
-                },
-                sourceMap: isDev
-              }
-            },
-            {
-              loader: 'sass-loader',
-              options: {
-                sourceMap: isDev
-              }
-            }
-          ]
+            MiniCssExtractPlugin.loader,
+            // Creates `style` nodes from JS strings
+            "style-loader",
+            // Translates CSS into CommonJS
+            "css-loader",
+            // Compiles Sass to CSS
+            "sass-loader",
+          ],
         },
         {
           test: /\.css$/i,
-          use: [ 'style-loader', 'css-loader' ]
+          use: [ MiniCssExtractPlugin.loader, 'style-loader', 'css-loader' ]
         },
         {
           test: /\.(js|jsx)$/, // Identifies which file or files should be transformed.
           use: {
-            loader: 'babel-loader'
-          }, // Babel loader to transpile modern JavaScript.
+            loader: "babel-loader",
+            options: {
+              presets: ['@babel/preset-env', '@babel/preset-react']
+            }
+          },
           exclude: /(node_modules|bower_components)/ // JavaScript files to be ignored.
         },
         {
@@ -91,12 +69,7 @@ module.exports = function( env, argv ) {
     optimization: isDev ?
       {
           minimizer: [
-            new UglifyJsPlugin({
-              cache: true,
-              parallel: true,
-              sourceMap: isDev // set to true if you want JS source maps
-            }),
-            new OptimizeCSSAssetsPlugin({})
+            new CssMinimizerPlugin(),
           ]
         } :
       {}
