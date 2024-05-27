@@ -20,20 +20,20 @@ module.exports = function( env, argv ) {
     module: {
       rules: [
         {
-          test: /\.s[ac]ss$/i,
+          test: /\.scss$/i,
           use: [
             MiniCssExtractPlugin.loader,
-            // Creates `style` nodes from JS strings
-            "style-loader",
             // Translates CSS into CommonJS
             "css-loader",
             // Compiles Sass to CSS
             "sass-loader",
           ],
+          sideEffects: true,
         },
         {
           test: /\.css$/i,
-          use: [ MiniCssExtractPlugin.loader, 'style-loader', 'css-loader' ]
+          use: [ MiniCssExtractPlugin.loader, 'css-loader' ],
+          sideEffects: true,
         },
         {
           test: /\.(js|jsx)$/, // Identifies which file or files should be transformed.
@@ -58,14 +58,9 @@ module.exports = function( env, argv ) {
         }
       ]
     },
-    plugins: [
-      new MiniCssExtractPlugin({
-
-        // Options similar to the same options in webpackOptions.output
-        // both options are optional
-        filename: '../css/[name].css'
-      })
-    ],
+    plugins: [new MiniCssExtractPlugin( {
+      filename: '../css/[name].css'
+    })],
     optimization: isDev ?
       {
           minimizer: [
